@@ -8,18 +8,18 @@ public class Tile
 {
     public Coords coordinateValue;
     [SerializeField]
-    private Plant currentPlant;
+    private PlantInstance currentPlant;
 
     public UnityEvent TileInfoChanged = new UnityEvent();
 
-    public Plant GetPlant()
+    public PlantInstance GetPlant()
     {
         return currentPlant;
     }
 
     public void SetPlant(Plant changePlant)
     {
-        currentPlant = changePlant;
+        currentPlant = new PlantInstance(changePlant);
         TileInfoChanged.Invoke();
     }
 }

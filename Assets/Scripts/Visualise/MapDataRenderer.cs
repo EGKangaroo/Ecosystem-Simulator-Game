@@ -30,7 +30,7 @@ public class MapDataRenderer : MonoBehaviour
 
     private void MeshCombine()
     {
-        transform.GetComponent<MeshFilter>().sharedMesh = null;
+        transform.GetComponent<MeshFilter>().sharedMesh = new Mesh();
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
