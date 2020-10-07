@@ -11,7 +11,7 @@ public class MapDataRenderer : MonoBehaviour
 
     public void CreateTiles()
     {
-        foreach(var item in tiles)
+        foreach (var item in tiles)
         {
             if(item != null)
             {
@@ -25,6 +25,27 @@ public class MapDataRenderer : MonoBehaviour
             inst.Initialise(item);
             tiles.Add(inst);
         }
-        
+        MeshCombine();
+    }
+
+    private void MeshCombine()
+    {
+        transform.GetComponent<MeshFilter>().sharedMesh = null;
+        MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+        int i = 0;
+        while (i < meshFilters.Length)
+        {
+            combine[i].mesh = meshFilters[i].sharedMesh;
+            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+            meshFilters[i].gameObject.SetActive(false);
+
+            i++;
+        }
+        transform.GetComponent<MeshFilter>().sharedMesh = new Mesh();
+        transform.GetComponent<MeshFilter>().sharedMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        transform.GetComponent<MeshFilter>().sharedMesh.CombineMeshes(combine);
+        transform.gameObject.SetActive(true);
     }
 }
