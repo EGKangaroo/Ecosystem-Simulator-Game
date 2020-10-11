@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class LifeFormData
+public abstract class LifeFormData
 {
     public LifeForm species;
 
     public int currentAge;
-    public MaturityStage currentMaturity;
-
+    public int timeSinceLastReproduction;
     public int currentHealth;
+
+    public MaturityStage CurrentMaturity()
+    {
+        return currentAge >= species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
+    }
 
     public int CurrentReproductionTime()
     {
@@ -19,14 +23,32 @@ public class LifeFormData
         return baseLevel + modifier;
     }
 
-    public int timeSinceLastReproduction;
+    public bool ReadyToReproduce()
+    {
+        return CurrentReproductionTime() >= timeSinceLastReproduction;
+    }
 
     public LifeFormData(LifeForm species)
     {
         this.species = species;
         currentAge = 0;
-        currentMaturity = currentAge > species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
         currentHealth = species.baseHealth;
         timeSinceLastReproduction = 0;
+    }
+
+    public void Advance()
+    {
+        currentAge++;
+        timeSinceLastReproduction++;
+    }
+
+    public bool Dead()
+    {
+        return currentAge > species.maximumLifespan || currentHealth <= 0;
+    }
+
+    public void Damage(int healthDamage)
+    {
+        currentHealth -= healthDamage;
     }
 }

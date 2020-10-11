@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  tilePrefab: {fileID: 0}
+  tilePrefab: {fileID: 5108775072512157204, guid: df8683e61d81a7743b5f97641b6ce263, type: 3}

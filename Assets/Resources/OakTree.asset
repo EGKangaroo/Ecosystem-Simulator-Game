@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966d22971f049a447922b70b81640bf3, type: 3}
   m_Name: OakTree
   m_EditorClassIdentifier: 
-  speciesName: 
-  maximumLifespan: 0
-  ageToMaturity: 0
-  baseReproductionTime: 0
-  baseHealth: 0
+  speciesName: Oak Tree
+  maximumLifespan: 100
+  ageToMaturity: 15
+  baseReproductionTime: 20
+  baseHealth: 100
   likedSpecies: []
   dislikedSpecies: []

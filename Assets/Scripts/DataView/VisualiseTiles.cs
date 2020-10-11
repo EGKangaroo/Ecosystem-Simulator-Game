@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class VisualiseTiles : MonoBehaviour
 {
+    public PlayerController controller;
     public WorldData data;
     public VisualTile tilePrefab;
 
@@ -20,11 +22,17 @@ public class VisualiseTiles : MonoBehaviour
 
         //regenerate
         GameTile[,] map = data.ReadMap();
+
+        if(map == null)
+        {
+            Debug.Log("Why is the map null?");
+        }
         for(int x = 0; x < map.GetLength(0); x++)
         {
             for(int y = 0; y < map.GetLength(1); y++)
             {
-                Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, this.transform);
+                VisualTile tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, this.transform);
+                tile.Init(data, map[x, y], controller);
             }
         }
 

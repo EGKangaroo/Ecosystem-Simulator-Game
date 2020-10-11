@@ -10,6 +10,8 @@ public enum MaturityStage
 
 public abstract class LifeForm : ScriptableObject
 {
+    public GameObject associatedModel;
+
     public string speciesName;
 
     public int maximumLifespan;
