@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class VisualiseTiles : MonoBehaviour
 {
     public PlayerController controller;
@@ -11,7 +10,6 @@ public class VisualiseTiles : MonoBehaviour
 
     public void GenerateVisualMap()
     {
-        Debug.Log("Generating Visual");
 
         //delete all visual tile child objects first
         VisualTile[] tiles = GetComponentsInChildren<VisualTile>();
@@ -23,10 +21,6 @@ public class VisualiseTiles : MonoBehaviour
         //regenerate
         GameTile[,] map = data.ReadMap();
 
-        if(map == null)
-        {
-            Debug.Log("Why is the map null?");
-        }
         for(int x = 0; x < map.GetLength(0); x++)
         {
             for(int y = 0; y < map.GetLength(1); y++)

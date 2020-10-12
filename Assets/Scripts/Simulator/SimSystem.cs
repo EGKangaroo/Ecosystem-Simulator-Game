@@ -9,10 +9,8 @@ public class SimSystem : MonoBehaviour
 
     public WorldData data;
 
-    [Range(0, 30)]
-    public int simulationStepsPerSecond;
-
-    private float simulationStepDuration;
+    [Range(0f, 1f)]
+    public float simulationStepDuration;
     private float secondsElapsed;
 
     public bool paused = true;
@@ -21,8 +19,30 @@ public class SimSystem : MonoBehaviour
 
     private void Start()
     {
-        simulationStepDuration = 1f / simulationStepsPerSecond;
         secondsElapsed = 0f;
+    }
+
+    public float GetSpeed()
+    {
+        return simulationStepDuration;
+    }
+
+    public void IncreaseSpeed()
+    {
+        simulationStepDuration /= 2;
+        if(simulationStepDuration < 0.125f)
+        {
+            simulationStepDuration = 0.125f;
+        }
+    }
+
+    public void DecreaseSpeed()
+    {
+        simulationStepDuration *= 2;
+        if(simulationStepDuration >= 32f)
+        {
+            simulationStepDuration = 32f;
+        }
     }
 
     // Update is called once per frame
@@ -51,17 +71,35 @@ public class SimSystem : MonoBehaviour
             item.Advance();
         }
 
-        //handle lifeform reproduction
-
-        //handle environmental damage
-
-        //handle deaths
         foreach(var tile in data.ReadMap())
         {
             if(tile.GetPlant() != null)
             {
+                //Handle reproduction
+                if (tile.GetPlant().ReadyToReproduce())
+                {
+                    //handle lifeform reproduction
+                    List<Coords> neighbours = tile.neighbouringCoords;
+                    int numberOfNeighbours = neighbours.Count;
+                    int r = Random.Range(0, numberOfNeighbours);
+
+                    Coords chosenCoord = neighbours[r];
+                    GameTile chosenTile = data.GetTileByCoord(chosenCoord);
+
+                    if (chosenTile.occupyingPlant == null)
+                    {
+                        chosenTile.SetPlant(new PlantData((Plant)tile.GetPlant().Species));
+                    }
+
+                    tile.GetPlant().ResetReproduction();
+                }
+
+                //handle environmental damage
+
+                //Handle death
                 if (tile.GetPlant().Dead())
                 {
+                    //handle deaths
                     tile.DeletePlant();
                 }
             }

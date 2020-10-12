@@ -21,7 +21,6 @@ public class VisualTile : MonoBehaviour
     private void Start()
     {
         controller = PlayerController.GetInstance();
-        tileRepresented.PlantChanged.AddListener(UpdatePlantModel);
     }
 
     //handle what happens when you click on this tile
@@ -29,14 +28,17 @@ public class VisualTile : MonoBehaviour
     {
         if(controller != null)
         {
-            data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
-            Debug.Log("New Lifeform added");
+            bool mouseOnUIObject = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            if (!mouseOnUIObject)
+            {
+                //do action
+                data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
+            }
         }
     }
 
     public void UpdatePlantModel()
     {
-        Debug.Log("Test");
         foreach(Transform child in plantSlot)
         {
             Destroy(child.gameObject);
@@ -44,7 +46,7 @@ public class VisualTile : MonoBehaviour
         if(tileRepresented.GetPlant() != null)
         {
             PlantData data = tileRepresented.GetPlant();
-            GameObject model = data.species.associatedModel;
+            GameObject model = data.Species.associatedModel;
             Instantiate(model, plantSlot);
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class LifeFormData
 {
-    public LifeForm species;
+    public LifeForm Species { get; set; }
 
     public int currentAge;
     public int timeSinceLastReproduction;
@@ -13,24 +13,24 @@ public abstract class LifeFormData
 
     public MaturityStage CurrentMaturity()
     {
-        return currentAge >= species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
+        return currentAge >= Species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
     }
 
     public int CurrentReproductionTime()
     {
-        int baseLevel = species.baseReproductionTime;
-        int modifier = species.baseReproductionTime * (1 - currentHealth / species.baseHealth);
+        int baseLevel = Species.baseReproductionTime;
+        int modifier = Species.baseReproductionTime * (1 - currentHealth / Species.baseHealth);
         return baseLevel + modifier;
     }
 
     public bool ReadyToReproduce()
     {
-        return CurrentReproductionTime() >= timeSinceLastReproduction;
+        return CurrentReproductionTime() <= timeSinceLastReproduction;
     }
 
     public LifeFormData(LifeForm species)
     {
-        this.species = species;
+        this.Species = species;
         currentAge = 0;
         currentHealth = species.baseHealth;
         timeSinceLastReproduction = 0;
@@ -44,11 +44,16 @@ public abstract class LifeFormData
 
     public bool Dead()
     {
-        return currentAge > species.maximumLifespan || currentHealth <= 0;
+        return currentAge > Species.maximumLifespan || currentHealth <= 0;
     }
 
     public void Damage(int healthDamage)
     {
         currentHealth -= healthDamage;
+    }
+
+    public void ResetReproduction()
+    {
+
     }
 }

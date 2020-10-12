@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class TerrainGen : MonoBehaviour
 {
     public WorldData data;
     [Min(1)]
     public int tilesPerRow;
+
+    private void Start()
+    {
+        if (Application.isPlaying)
+        {
+            Generate();
+        }
+    }
 
     public void Generate()
     {

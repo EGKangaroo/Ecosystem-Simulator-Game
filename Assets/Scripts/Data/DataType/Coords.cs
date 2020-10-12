@@ -13,4 +13,22 @@ public struct Coords
         this.x = x;
         this.y = y;
     }
+
+    public override bool Equals(object obj)
+    {
+        if(obj is Coords)
+        {
+            Coords coord = (Coords)obj;
+            return x == coord.x && y == coord.y;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ y.GetHashCode();
+    }
 }
