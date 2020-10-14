@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VisualTile : MonoBehaviour
 {
+    private bool mousedOver = false;
+
     public WorldData data;
     public GameTile tileRepresented;
     public PlayerController controller;
@@ -23,18 +25,34 @@ public class VisualTile : MonoBehaviour
         controller = PlayerController.GetInstance();
     }
 
-    //handle what happens when you click on this tile
-    public void OnMouseDown()
+    private void Update()
     {
-        if(controller != null)
+        if (controller != null)
         {
             bool mouseOnUIObject = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-            if (!mouseOnUIObject)
+            if (!mouseOnUIObject && mousedOver)
             {
                 //do action
-                data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
+                if (Input.GetMouseButtonDown(0))
+                {
+                    data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
+                }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    data.AddNewLifeForm(tileRepresented, controller.GetSecondSelectedLifeform());
+                }
             }
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        mousedOver = true;
+    }
+
+    private void OnMouseExit()
+    {
+        mousedOver = false;
     }
 
     public void UpdatePlantModel()

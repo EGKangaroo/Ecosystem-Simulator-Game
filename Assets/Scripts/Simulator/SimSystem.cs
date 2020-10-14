@@ -111,6 +111,10 @@ public class SimSystem : MonoBehaviour
         List<Coords> coordinates = tile.neighbouringCoords;
         int damageCounter = 0;
         bool aroundLikedSpecies = false;
+        if(plant.Species.likedSpecies.Count() == 0)
+        {
+            aroundLikedSpecies = true;
+        }
         foreach (var item in coordinates)
         {
             GameTile neighbour = data.GetTileByCoord(item);

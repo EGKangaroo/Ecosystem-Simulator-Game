@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966d22971f049a447922b70b81640bf3, type: 3}
   m_Name: OakTree
   m_EditorClassIdentifier: 
+  associatedModel: {fileID: 3472164562958268839, guid: be474eab6235e2e45ad3354064286e28, type: 3}
   speciesName: Oak Tree
   maximumLifespan: 100
   ageToMaturity: 15
