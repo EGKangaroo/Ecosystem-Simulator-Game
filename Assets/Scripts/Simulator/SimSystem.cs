@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -75,33 +76,16 @@ public class SimSystem : MonoBehaviour
         {
             if(tile.GetPlant() != null)
             {
+                PlantData plant = tile.GetPlant();
+
                 //Handle reproduction
-                if (tile.GetPlant().ReadyToReproduce())
-                {
-                    //handle lifeform reproduction
-                    List<Coords> neighbours = tile.neighbouringCoords;
-                    int numberOfNeighbours = neighbours.Count;
-                    int r = Random.Range(0, numberOfNeighbours);
-
-                    Coords chosenCoord = neighbours[r];
-                    GameTile chosenTile = data.GetTileByCoord(chosenCoord);
-
-                    if (chosenTile.occupyingPlant == null)
-                    {
-                        chosenTile.SetPlant(new PlantData((Plant)tile.GetPlant().Species));
-                    }
-
-                    tile.GetPlant().ResetReproduction();
-                }
+                HandleReproduction(plant, tile);
 
                 //handle environmental damage
+                HandleEnvironmentDamage(plant, tile);
 
                 //Handle death
-                if (tile.GetPlant().Dead())
-                {
-                    //handle deaths
-                    tile.DeletePlant();
-                }
+                HandleDeath(plant, tile);
             }
         }
 
@@ -120,5 +104,66 @@ public class SimSystem : MonoBehaviour
     public int GetNumberOfStepsSimulated()
     {
         return stepsSimulated;
+    }
+
+    private void HandleEnvironmentDamage(PlantData plant, GameTile tile)
+    {
+        List<Coords> coordinates = tile.neighbouringCoords;
+        int damageCounter = 0;
+        bool aroundLikedSpecies = false;
+        foreach (var item in coordinates)
+        {
+            GameTile neighbour = data.GetTileByCoord(item);
+            PlantData neighbourPlant = neighbour.GetPlant();
+            if (neighbourPlant != null)
+            {
+                if (plant.Species.dislikedSpecies.Contains(neighbourPlant.Species))
+                {
+                    damageCounter++;
+                }
+                if (!aroundLikedSpecies)
+                {
+                    if (plant.Species.likedSpecies.Contains(neighbourPlant.Species))
+                    {
+                        aroundLikedSpecies = true;
+                    }
+                }
+            }
+        }
+        if (!aroundLikedSpecies)
+        {
+            damageCounter++;
+        }
+        plant.Damage(damageCounter);
+    }
+
+    private void HandleDeath(PlantData plant, GameTile tile)
+    {
+        if (plant.Dead())
+        {
+            //handle deaths
+            tile.DeletePlant();
+        }
+    }
+
+    private void HandleReproduction(PlantData plant, GameTile tile)
+    {
+        if (plant.ReadyToReproduce())
+        {
+            //handle lifeform reproduction
+            List<Coords> neighbours = tile.neighbouringCoords;
+            int numberOfNeighbours = neighbours.Count;
+            int r = Random.Range(0, numberOfNeighbours);
+
+            Coords chosenCoord = neighbours[r];
+            GameTile chosenTile = data.GetTileByCoord(chosenCoord);
+
+            if (chosenTile.occupyingPlant == null)
+            {
+                chosenTile.SetPlant(new PlantData((Plant)tile.GetPlant().Species));
+            }
+
+            tile.GetPlant().ResetReproduction();
+        }
     }
 }
