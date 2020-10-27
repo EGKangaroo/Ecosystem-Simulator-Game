@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public abstract class LifeFormData
 {
+    protected WorldData instance;
+
+    public GameTile occupyingTile;
+
     public LifeForm Species { get; set; }
 
     public int currentAge;
@@ -13,7 +18,14 @@ public abstract class LifeFormData
 
     public MaturityStage CurrentMaturity()
     {
-        return currentAge >= Species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
+        if (Dead())
+        {
+            return MaturityStage.dead;
+        }
+        else
+        {
+            return currentAge >= Species.ageToMaturity ? MaturityStage.mature : MaturityStage.immature;
+        }
     }
 
     public int CurrentReproductionTime()
@@ -28,18 +40,124 @@ public abstract class LifeFormData
         return CurrentReproductionTime() <= timeSinceLastReproduction;
     }
 
-    public LifeFormData(LifeForm species)
+    public LifeFormData(LifeForm species, GameTile tile)
     {
+        instance = WorldData.GetInstance();
+        this.occupyingTile = tile;
         this.Species = species;
         currentAge = 0;
         currentHealth = species.baseHealth;
         timeSinceLastReproduction = 0;
     }
 
+    public void UpdateLifeForm()
+    {
+        //advance age
+        Advance();
+
+        //handle health
+        HandleHealth();
+
+        //handle reproduction
+        HandleReproducton();
+
+        //handle death
+        HandleDeath();
+    }
+
+    public void HandleDeath()
+    {
+        if (Dead())
+        {
+            ImplHandleDeath();
+        }
+    }
+
+    protected abstract void ImplHandleDeath();
+
     public void Advance()
     {
         currentAge++;
         timeSinceLastReproduction++;
+    }
+
+    private void HandleReproducton()
+    {
+        if (ReadyToReproduce())
+        {
+            GameTile tile = occupyingTile;
+            List<Coords> neighbours = tile.neighbouringCoords;
+            int randomNumber = Random.Range(0, neighbours.Count);
+            Coords pickedCoord = neighbours[randomNumber];
+            ImplReproduce(pickedCoord);
+            ResetReproduction();
+        }
+    }
+
+    protected abstract void ImplReproduce(Coords pickedCoord);
+
+    private void HandleHealth()
+    {
+        //handle liked species
+        HandleLikedSpecies();
+
+        //handle disliked species
+        HandleDislikedSpecies();
+    }
+
+    private void HandleLikedSpecies()
+    {
+        bool likedSpeciesFound = false;
+
+        if(Species.likedSpecies.Count() > 0)
+        {
+            GameTile tile = this.occupyingTile;
+            List<Coords> neighbours = occupyingTile.neighbouringCoords;
+            foreach (var neighbour in neighbours)
+            {
+                GameTile neighbourTile = instance.GetTileByCoord(neighbour);
+                foreach (var item in neighbourTile.GetAllLifeForms())
+                {
+                    if (Species.likedSpecies.Contains(item.Species))
+                    {
+                        likedSpeciesFound = true;
+                        break;
+                    }
+                }
+                if (likedSpeciesFound)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            likedSpeciesFound = true;
+        }
+
+        if (!likedSpeciesFound)
+        {
+            Damage(1);
+        }
+    }
+
+    private void HandleDislikedSpecies()
+    {
+        GameTile tile = this.occupyingTile;
+        List<Coords> neighbours = occupyingTile.neighbouringCoords;
+        int numberOfDislikedSpecies = 0;
+        foreach (var neighbour in neighbours)
+        {
+            GameTile neighbourTile = instance.GetTileByCoord(neighbour);
+            foreach (var item in neighbourTile.GetAllLifeForms())
+            {
+                if (Species.dislikedSpecies.Contains(item.Species))
+                {
+                    numberOfDislikedSpecies++;
+                }
+            }
+        }
+        Damage(numberOfDislikedSpecies);
     }
 
     public bool Dead()
@@ -54,6 +172,6 @@ public abstract class LifeFormData
 
     public void ResetReproduction()
     {
-
+        timeSinceLastReproduction = 0;
     }
 }

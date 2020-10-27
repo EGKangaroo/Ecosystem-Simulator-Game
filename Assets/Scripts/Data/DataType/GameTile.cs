@@ -14,6 +14,16 @@ public class GameTile
 
     public PlantData occupyingPlant;
 
+    public List<LifeFormData> GetAllLifeForms()
+    {
+        List<LifeFormData> lifeForms = new List<LifeFormData>();
+        if(occupyingPlant != null)
+        {
+            lifeForms.Add(occupyingPlant);
+        }
+        return lifeForms;
+    }
+
     public void SetPlant(PlantData data)
     {
         occupyingPlant = data;

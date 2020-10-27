@@ -5,7 +5,8 @@ using UnityEngine;
 public enum MaturityStage
 {
     immature,
-    mature
+    mature,
+    dead
 }
 
 public abstract class LifeForm : ScriptableObject

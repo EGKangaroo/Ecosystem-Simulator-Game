@@ -11,6 +11,25 @@ public class WorldData : MonoBehaviour
 
     private GameTile[,] mapData;
 
+    private static WorldData instance;
+
+    public static WorldData GetInstance()
+    {
+        return instance;
+    }
+
+    public void Awake()
+    {
+        if(instance == null && instance != this)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public void CreateMap(GameTile[,] data)
     {
         this.mapData = data;
@@ -81,9 +100,6 @@ public class WorldData : MonoBehaviour
     {
         List<LifeFormData> lifeforms = new List<LifeFormData>();
 
-        Debug.Log(mapData[0, 0].ToString());
-
-
         foreach(var mapTile in mapData)
         {
             PlantData plant = mapTile.GetPlant();
@@ -98,7 +114,6 @@ public class WorldData : MonoBehaviour
 
     public void AddNewLifeForm(GameTile tile, Plant lifeform)
     {
-        PlantData plant = new PlantData(lifeform);
-        tile.SetPlant(plant);
+        PlantData plant = new PlantData(lifeform, tile);
     }
 }
