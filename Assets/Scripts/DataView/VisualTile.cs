@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class VisualTile : MonoBehaviour
 {
+    [Min(0)]
+    [SerializeField]
+    private float posVariation;
+
     private bool mousedOver = false;
 
     public WorldData data;
@@ -68,7 +72,13 @@ public class VisualTile : MonoBehaviour
         {
             PlantData data = tileRepresented.GetPlant();
             GameObject model = data.Species.associatedModel;
-            Instantiate(model, plantSlot);
+            GameObject placedModel = Instantiate(model, plantSlot);
+            placedModel.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+
+            float randX = Random.Range(-posVariation, posVariation);
+            float randZ = Random.Range(-posVariation, posVariation);
+
+            placedModel.transform.localPosition = new Vector3(randX, placedModel.transform.localPosition.y, randZ);
         }
     }
 }
