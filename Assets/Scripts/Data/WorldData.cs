@@ -48,15 +48,15 @@ public class WorldData : MonoBehaviour
 
         int[] xNeighbours = new int[]
         {
-                    tile.coords.x-1,
-                    tile.coords.x,
-                    tile.coords.x+1
+            tile.coords.x-1,
+            tile.coords.x,
+            tile.coords.x+1
         };
         int[] yNeighbours = new int[]
         {
-                    tile.coords.y-1,
-                    tile.coords.y,
-                    tile.coords.y+1
+            tile.coords.y-1,
+            tile.coords.y,
+            tile.coords.y+1
         };
 
         foreach(var itemX in xNeighbours)
@@ -112,8 +112,8 @@ public class WorldData : MonoBehaviour
         return lifeforms;
     }
 
-    public void AddNewLifeForm(GameTile tile, Plant lifeform)
+    public void AddNewLifeForm(GameTile tile, LifeForm lifeform)
     {
-        PlantData plant = new PlantData(lifeform, tile);
+        lifeform.InitiateLifeForm(tile);
     }
 }

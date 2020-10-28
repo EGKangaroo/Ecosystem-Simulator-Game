@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   tileRepresented:
+    neighbouringCoords: []
     PlantChanged:
       m_PersistentCalls:
         m_Calls: []
@@ -86,7 +87,6 @@ MonoBehaviour:
       x: 0
       y: 0
     occupyingPlant:
-      species: {fileID: 0}
       currentAge: 0
       timeSinceLastReproduction: 0
       currentHealth: 0
@@ -168,7 +168,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ea74741faedd6254aaaa4587af427f9e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

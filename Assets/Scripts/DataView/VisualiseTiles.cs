@@ -26,7 +26,7 @@ public class VisualiseTiles : MonoBehaviour
             for(int y = 0; y < map.GetLength(1); y++)
             {
                 VisualTile tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, this.transform);
-                tile.Init(data, map[x, y], controller);
+                tile.Init(map[x, y], controller);
             }
         }
 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966d22971f049a447922b70b81640bf3, type: 3}
+  m_Name: Bush
+  m_EditorClassIdentifier: 
+  graphLineColor: {r: 0.78039217, g: 0, b: 0.5529412, a: 1}
+  associatedModel: {fileID: 3472164562958268839, guid: 463dc06a539bbd1409cf47106a3e6686, type: 3}
+  speciesName: Berry Bush
+  maximumLifespan: 25
+  minimumLifespan: 5
+  ageToMaturity: 5
+  baseReproductionTime: 5
+  baseHealth: 15
+  likedSpecies:
+  - {fileID: 11400000, guid: d83bcf63aaf42c8428a184220bc9ed59, type: 2}
+  - {fileID: 11400000}
+  dislikedSpecies:
+  - {fileID: 11400000, guid: 03e715247220f9f4cb50511f76a5f845, type: 2}

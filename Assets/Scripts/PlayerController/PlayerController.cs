@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Plant selectedLifeform;
-    public Plant secondSelectedLifeform;
+    public LifeForm selectedLifeform;
 
     private static PlayerController _instance;
 
@@ -26,13 +25,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Plant GetSelectedLifeform()
+    public LifeForm GetSelectedLifeform()
     {
         return selectedLifeform;
-    }
-
-    public Plant GetSecondSelectedLifeform()
-    {
-        return secondSelectedLifeform;
     }
 }

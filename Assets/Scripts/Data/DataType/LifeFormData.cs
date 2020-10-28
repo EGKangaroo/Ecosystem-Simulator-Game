@@ -8,9 +8,12 @@ public abstract class LifeFormData
 {
     protected WorldData instance;
 
+    [System.NonSerialized]
     public GameTile occupyingTile;
 
     public LifeForm Species { get; set; }
+
+    private int maximumAge;
 
     public int currentAge;
     public int timeSinceLastReproduction;
@@ -48,6 +51,7 @@ public abstract class LifeFormData
         currentAge = 0;
         currentHealth = species.baseHealth;
         timeSinceLastReproduction = 0;
+        maximumAge = Random.Range(species.minimumLifespan, species.maximumLifespan + 1);
     }
 
     public void UpdateLifeForm()
@@ -145,7 +149,7 @@ public abstract class LifeFormData
     {
         GameTile tile = this.occupyingTile;
         List<Coords> neighbours = occupyingTile.neighbouringCoords;
-        int numberOfDislikedSpecies = 0;
+        bool dislikedSpeciesFound = false;
         foreach (var neighbour in neighbours)
         {
             GameTile neighbourTile = instance.GetTileByCoord(neighbour);
@@ -153,16 +157,21 @@ public abstract class LifeFormData
             {
                 if (Species.dislikedSpecies.Contains(item.Species))
                 {
-                    numberOfDislikedSpecies++;
+                    dislikedSpeciesFound = true;
+                    break;
                 }
             }
+            if (dislikedSpeciesFound)
+            {
+                break;
+            }
         }
-        Damage(numberOfDislikedSpecies);
+        Damage(dislikedSpeciesFound? 1 : 0);
     }
 
     public bool Dead()
     {
-        return currentAge > Species.maximumLifespan || currentHealth <= 0;
+        return currentAge > maximumAge || currentHealth <= 0;
     }
 
     public void Damage(int healthDamage)

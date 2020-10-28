@@ -66,7 +66,7 @@ public class SimSystem : MonoBehaviour
         //get all the lifeforms
         List<LifeFormData> life = data.GetAllLifeForms();
 
-        //age up all lifeforms
+        //update all life forms
         foreach(var item in life)
         {
             item.UpdateLifeForm();

@@ -12,9 +12,9 @@ public class VisualTile : MonoBehaviour
 
     public Transform plantSlot;
 
-    public void Init(WorldData data, GameTile tile, PlayerController controller)
+    public void Init(GameTile tile, PlayerController controller)
     {
-        this.data = data;
+        this.data = WorldData.GetInstance();
         this.tileRepresented = tile;
         tileRepresented.PlantChanged.AddListener(UpdatePlantModel);
         this.controller = controller;
@@ -35,11 +35,14 @@ public class VisualTile : MonoBehaviour
                 //do action
                 if (Input.GetMouseButtonDown(0))
                 {
-                    data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
-                }
-                if (Input.GetMouseButtonDown(1))
-                {
-                    data.AddNewLifeForm(tileRepresented, controller.GetSecondSelectedLifeform());
+                    if(controller.GetSelectedLifeform() != null)
+                    {
+                        data.AddNewLifeForm(tileRepresented, controller.GetSelectedLifeform());
+                    }
+                    else
+                    {
+                        Debug.Log("Can't place nothing");
+                    }
                 }
             }
         }

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966d22971f049a447922b70b81640bf3, type: 3}
   m_Name: Grass
   m_EditorClassIdentifier: 
+  graphLineColor: {r: 0, g: 0.85882354, b: 0, a: 1}
   associatedModel: {fileID: 3472164562958268839, guid: d47a3cd560efada4186933692f49a86c, type: 3}
   speciesName: Grass
   maximumLifespan: 10
+  minimumLifespan: 5
   ageToMaturity: 0
   baseReproductionTime: 3
   baseHealth: 10
