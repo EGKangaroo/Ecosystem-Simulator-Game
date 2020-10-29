@@ -5,7 +5,7 @@ using UnityEngine;
 public class VisualiseTiles : MonoBehaviour
 {
     public PlayerController controller;
-    public WorldData data;
+    public WorldModel data;
     public VisualTile tilePrefab;
 
     public void GenerateVisualMap()

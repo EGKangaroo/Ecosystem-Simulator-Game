@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TerrainGen : MonoBehaviour
 {
-    public WorldData data;
+    public WorldModel data;
     [Min(1)]
     public int tilesPerRow;
 

@@ -12,11 +12,11 @@ public class GameTile
 
     public Coords coords;
 
-    public PlantData occupyingPlant;
+    public PlantInstance occupyingPlant;
 
-    public List<LifeFormData> GetAllLifeForms()
+    public List<LifeFormInstance> GetAllLifeForms()
     {
-        List<LifeFormData> lifeForms = new List<LifeFormData>();
+        List<LifeFormInstance> lifeForms = new List<LifeFormInstance>();
         if(occupyingPlant != null)
         {
             lifeForms.Add(occupyingPlant);
@@ -24,7 +24,7 @@ public class GameTile
         return lifeForms;
     }
 
-    public void SetPlant(PlantData data)
+    public void SetPlant(PlantInstance data)
     {
         occupyingPlant = data;
         PlantChanged.Invoke();
@@ -36,7 +36,7 @@ public class GameTile
         PlantChanged.Invoke();
     }
 
-    public PlantData GetPlant()
+    public PlantInstance GetPlant()
     {
         return occupyingPlant;
     }

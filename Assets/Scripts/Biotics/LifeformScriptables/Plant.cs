@@ -7,6 +7,6 @@ public class Plant : LifeForm
 {
     public override void InitiateLifeForm(GameTile tile)
     {
-        new PlantData(this, tile);
+        new PlantInstance(this, tile);
     }
 }

@@ -10,7 +10,7 @@ public class VisualTile : MonoBehaviour
 
     private bool mousedOver = false;
 
-    public WorldData data;
+    public WorldModel data;
     public GameTile tileRepresented;
     public PlayerController controller;
 
@@ -18,7 +18,7 @@ public class VisualTile : MonoBehaviour
 
     public void Init(GameTile tile, PlayerController controller)
     {
-        this.data = WorldData.GetInstance();
+        this.data = WorldModel.GetInstance();
         this.tileRepresented = tile;
         tileRepresented.PlantChanged.AddListener(UpdatePlantModel);
         this.controller = controller;
@@ -70,7 +70,7 @@ public class VisualTile : MonoBehaviour
         }
         if(tileRepresented.GetPlant() != null)
         {
-            PlantData data = tileRepresented.GetPlant();
+            PlantInstance data = tileRepresented.GetPlant();
             GameObject model = data.Species.associatedModel;
             GameObject placedModel = Instantiate(model, plantSlot);
             placedModel.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);

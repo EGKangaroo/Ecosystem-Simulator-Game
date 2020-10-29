@@ -8,7 +8,7 @@ public class SimSystem : MonoBehaviour
 {
     private int stepsSimulated = 0;
 
-    public WorldData data;
+    public WorldModel data;
 
     [Range(0f, 1f)]
     public float simulationStepDuration;
@@ -64,7 +64,7 @@ public class SimSystem : MonoBehaviour
     void SimulateStep()
     {
         //get all the lifeforms
-        List<LifeFormData> life = data.GetAllLifeForms();
+        List<LifeFormInstance> life = data.GetAllLifeForms();
 
         //update all life forms
         foreach(var item in life)

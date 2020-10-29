@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlantData : LifeFormData
+public class PlantInstance : LifeFormInstance
 {
-    public PlantData(Plant species, GameTile tile) : base(species, tile)
+    public PlantInstance(Plant species, GameTile tile) : base(species, tile)
     {
         tile.SetPlant(this);
     }
@@ -21,7 +21,7 @@ public class PlantData : LifeFormData
 
         if(tile.occupyingPlant == null)
         {
-            new PlantData((Plant)this.Species, tile);
+            new PlantInstance((Plant)this.Species, tile);
         }
     }
 }

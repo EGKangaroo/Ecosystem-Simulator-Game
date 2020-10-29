@@ -5,15 +5,15 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class WorldData : MonoBehaviour
+public class WorldModel : MonoBehaviour
 {
     public UnityEvent mapCreatedEvent = new UnityEvent();
 
     private GameTile[,] mapData;
 
-    private static WorldData instance;
+    private static WorldModel instance;
 
-    public static WorldData GetInstance()
+    public static WorldModel GetInstance()
     {
         return instance;
     }
@@ -96,13 +96,13 @@ public class WorldData : MonoBehaviour
         return null;
     }
 
-    public List<LifeFormData> GetAllLifeForms()
+    public List<LifeFormInstance> GetAllLifeForms()
     {
-        List<LifeFormData> lifeforms = new List<LifeFormData>();
+        List<LifeFormInstance> lifeforms = new List<LifeFormInstance>();
 
         foreach(var mapTile in mapData)
         {
-            PlantData plant = mapTile.GetPlant();
+            PlantInstance plant = mapTile.GetPlant();
             if(plant != null)
             {
                 lifeforms.Add(plant);

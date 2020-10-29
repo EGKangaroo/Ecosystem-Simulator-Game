@@ -4,9 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class LifeFormData
+public abstract class LifeFormInstance
 {
-    protected WorldData instance;
+    protected WorldModel instance;
 
     [System.NonSerialized]
     public GameTile occupyingTile;
@@ -43,9 +43,9 @@ public abstract class LifeFormData
         return CurrentReproductionTime() <= timeSinceLastReproduction;
     }
 
-    public LifeFormData(LifeForm species, GameTile tile)
+    public LifeFormInstance(LifeForm species, GameTile tile)
     {
-        instance = WorldData.GetInstance();
+        instance = WorldModel.GetInstance();
         this.occupyingTile = tile;
         this.Species = species;
         currentAge = 0;
