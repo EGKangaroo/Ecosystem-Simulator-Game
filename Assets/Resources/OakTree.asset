@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphLineColor: {r: 0, g: 0.26415092, b: 0.053751886, a: 1}
   associatedModel: {fileID: 3472164562958268839, guid: be474eab6235e2e45ad3354064286e28, type: 3}
-  speciesName: Oak Tree
+  speciesName: Tree
   maximumLifespan: 100
   minimumLifespan: 25
   ageToMaturity: 15
