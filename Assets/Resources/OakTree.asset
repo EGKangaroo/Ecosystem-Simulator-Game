@@ -18,7 +18,8 @@ MonoBehaviour:
   maximumLifespan: 100
   minimumLifespan: 25
   ageToMaturity: 15
-  baseReproductionTime: 20
+  baseReproductionTime: 15
   baseHealth: 100
   likedSpecies: []
-  dislikedSpecies: []
+  dislikedSpecies:
+  - {fileID: 11400000, guid: 5871c41f5494e064bbc7e46760d7dced, type: 2}

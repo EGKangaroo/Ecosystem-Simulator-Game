@@ -15,11 +15,11 @@ MonoBehaviour:
   graphLineColor: {r: 0.78039217, g: 0, b: 0.5529412, a: 1}
   associatedModel: {fileID: 3472164562958268839, guid: 463dc06a539bbd1409cf47106a3e6686, type: 3}
   speciesName: Berry Bush
-  maximumLifespan: 25
-  minimumLifespan: 5
-  ageToMaturity: 5
+  maximumLifespan: 40
+  minimumLifespan: 10
+  ageToMaturity: 10
   baseReproductionTime: 5
-  baseHealth: 15
+  baseHealth: 20
   likedSpecies:
   - {fileID: 11400000, guid: d83bcf63aaf42c8428a184220bc9ed59, type: 2}
   - {fileID: 11400000}
