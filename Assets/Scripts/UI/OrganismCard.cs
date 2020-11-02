@@ -10,6 +10,7 @@ public class OrganismCard : MonoBehaviour
 
     public Button selectButton;
     public Text label;
+    public Image image;
 
     // Start is called before the first frame update
     void Start()
@@ -28,5 +29,6 @@ public class OrganismCard : MonoBehaviour
         Debug.Log(this.lifeformRepresented.speciesName);
         selectButton.onClick.AddListener(ChangeLifeForm);
         label.text = lifeformRepresented.speciesName;
+        image.color = lifeformRepresented.graphLineColor;
     }
 }

@@ -18,6 +18,11 @@ public class SimSystem : MonoBehaviour
 
     public UnityEvent stepDone = new UnityEvent();
 
+    public void SetPauseTo(bool val)
+    {
+        paused = val;
+    }
+
     private void Start()
     {
         secondsElapsed = 0f;
